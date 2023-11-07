@@ -1,0 +1,64 @@
+create database office;
+
+create table employee(E_id int,E_name varchar(10),address varchar(100) ,salary  int,commission int);
+
+insert into employee values(1,"amit","pune",35000,5000);
+insert into employee values(2,"sneha","pune",25000,NULL);
+insert into employee values(3,"savita","nashik",28000,2000);
+insert into employee values(4,"pooja","mumbai",19000,NULL);
+insert into employee values(5,"sagar","mumbai",25000,3000);
+
+
+select*from employee;
+
+create table project(pr_no int, addr varchar(20));
+
+
+insert into project values(10,"mumbai");
+
+insert into project values(20,"pune");
+
+insert into project values(20,"jalgaon");
+
+select*from project;
+
+
+
+
+
+SELECT DISTINCT address FROM employee;
+
+
+SELECT MAX(salary) AS maximum_salary, MIN(salary) AS minimum_salary FROM employee;
+
+SELECT * FROM employee ORDER BY salary ASC;
+
+
+SELECT E_name FROM employee WHERE address IN ('Nashik', 'Pune');
+
+
+
+SELECT E_name FROM employee WHERE commission IS NULL;
+
+
+UPDATE employee SET address = 'Nashik' WHERE E_name = 'amit';
+
+SELECT * FROM employee WHERE E_name LIKE 'A%';
+
+
+SELECT COUNT(*) AS staff_count FROM employee WHERE address = 'mumbai';
+
+
+SELECT address, COUNT(*) AS staff_count FROM employee GROUP BY address;
+
+SELECT address AS employee_address FROM employee
+UNION
+SELECT addr AS project_address FROM project;
+
+
+SELECT address, MIN(salary) AS min_salary FROM employee GROUP BY address;
+
+SELECT address, MAX(salary) AS max_salary FROM employee GROUP BY address HAVING MAX(salary) > 26000;
+
+
+DELETE FROM employee WHERE salary > 30000;

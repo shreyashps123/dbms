@@ -1,0 +1,44 @@
+CREATE TABLE Library (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Author VARCHAR(255),
+    PublishedYear INT
+);
+CREATE TABLE Library_Audit (
+    AuditID INT PRIMARY KEY,
+    BookID INT,
+    Title VARCHAR(255),
+    Author VARCHAR(255),
+    PublishedYear INT,
+    Action VARCHAR(10),  -- Indicates whether it's an UPDATE or DELETE
+    ChangeDateTime DATETIME
+);
+DELIMITER $$
+
+CREATE TRIGGER Library_Before_Update_Delete
+BEFORE UPDATE ON Library
+FOR EACH ROW
+BEGIN
+    -- For UPDATE operation, insert the old values into Library_Audit
+    IF OLD.BookID IS NOT NULL THEN
+        INSERT INTO Library_Audit (BookID, Title, Author, PublishedYear, Action, ChangeDateTime)
+        VALUES (OLD.BookID, OLD.Title, OLD.Author, OLD.PublishedYear, 'UPDATE', NOW());
+    END IF;
+END;
+$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER Library_Before_Delete
+BEFORE DELETE ON Library
+FOR EACH ROW
+BEGIN
+    -- For DELETE operation, insert the old values into Library_Audit
+    INSERT INTO Library_Audit (BookID, Title, Author, PublishedYear, Action, ChangeDateTime)
+    VALUES (OLD.BookID, OLD.Title, OLD.Author, OLD.PublishedYear, 'DELETE', NOW());
+END;
+$$
+
+DELIMITER ;

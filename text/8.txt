@@ -1,0 +1,67 @@
+create database college;
+
+create table students(S_ID int,name varchar(20),dept_name varchar(20),total_credits int);
+
+insert into students values(1,"aman","comp",10);
+insert into students values(2,"amit","entc",1);
+insert into students values(3,"sachin","civil",30);
+insert into students values(4,"sandip",NULL,40);
+select* from students;
+
+
+create table instructor (T_ID int,name varchar(20),dept_name varchar(20),salary int);
+
+insert into instructor values(1,"aman","comp",100000);
+insert into instructor values(2,"amit","entc",1000);
+insert into instructor values(3,"sachin","civil",3000);
+insert into instructor values(4,"sandip","mech",4000000);
+select* from instructor;
+
+
+create table course(course_ID int,title varchar(20),dept_name varchar(20),total_credits int);
+
+insert into course values(1,"dbms","comp",10);
+insert into course values(2,"fm","civil",30);
+insert into course values(3,"cd","mech",40);
+
+select* from course;
+
+
+
+
+
+create table teacher(t_ID int,course_id int,sec_id varchar(10),semester int,year int);
+
+insert into teacher values(1,"5","A",1,2020);
+insert into teacher values(2,"6","B",2,2021);
+insert into teacher values(3,"7","C",3,2022);
+insert into teacher values(4,"8","D",4,2023);
+select* from teacher;
+
+
+
+SELECT DISTINCT ins.name AS instructor_name
+FROM instructor ins
+JOIN teacher t ON ins.T_ID = t.T_ID;
+
+
+
+CREATE VIEW students_details AS
+SELECT S_ID, name, dept_name, total_credits
+FROM students;
+
+
+select*from students;
+
+
+
+alter table students
+ change COLUMN dept_name department_name varchar(20);
+
+select*from students;
+
+
+DELETE from students 
+where department_name is NULL;
+
+select*from students;

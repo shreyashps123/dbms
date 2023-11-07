@@ -1,0 +1,46 @@
+create table Empl (e_no int, e_name varchar(20), post varchar(20), pay_rate int);
+INSERT INTO Empl (e_no, e_name, post, pay_rate) VALUES (101, 'Sachin', 'Manager', 60000);
+INSERT INTO Empl (e_no, e_name, post, pay_rate) VALUES (102, 'Rahul', 'Supervisor', 45000);
+INSERT INTO Empl (e_no, e_name, post, pay_rate) VALUES (103, 'Virat', 'Associate', 35000);
+INSERT INTO Empl (e_no, e_name, post, pay_rate) VALUES (104, 'Dhoni', 'Associate', 32000);
+
+
+select*from Empl;
+
+
+create table Position (pos_no int, post varchar(20));
+INSERT INTO Position (pos_no, post) VALUES (1, 'Manager');
+INSERT INTO Position (pos_no, post) VALUES (2, 'Supervisor');
+INSERT INTO Position (pos_no, post) VALUES (3, 'Associate');
+select*from Position;
+
+
+ create table Duty_alloc (pos_no int, e_no int, month varchar(20), year int, shift varchar(20));
+INSERT INTO Duty_alloc (pos_no, e_no, month, year, shift) VALUES (1, 101, 'April', 2003, 'First');
+INSERT INTO Duty_alloc (pos_no, e_no, month, year, shift) VALUES (2, 102, 'April', 2003, 'First');
+INSERT INTO Duty_alloc (pos_no, e_no, month, year, shift) VALUES (3, 103, 'April', 2003, 'Second');
+INSERT INTO Duty_alloc (pos_no, e_no, month, year, shift) VALUES (3, 104, 'April', 2003, 'First');
+select*from Duty_alloc;
+
+
+
+
+
+SELECT * 
+FROM Duty_alloc
+WHERE e_no = 123 AND month = 'April' AND year = 2003 AND shift = 'First';
+
+SELECT * 
+FROM Empl
+WHERE pay_rate >= (SELECT pay_rate FROM Empl WHERE e_name = 'Sachin');
+
+
+SELECT shift, COUNT(e_no) AS manager_count
+FROM Duty_alloc d
+JOIN Position p ON d.pos_no = p.pos_no
+WHERE p.post = 'Manager'
+GROUP BY shift;
+
+
+
+

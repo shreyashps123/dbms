@@ -1,0 +1,22 @@
+1.db.orderinfo.find({
+    price: { $gte: 250, $lte: 450 }
+}, { cust_name: 1, _id: 0 })
+
+
+2.db.orderinfo.updateOne({ cust_id: 123 }, { $inc: { price: 10 } })
+db.orderinfo.updateOne({ cust_id: 124 }, { $inc: { price: -5 } })
+
+
+
+3.db.orderinfo.updateMany({}, { $unset: { status: "" } })
+
+
+
+
+4.db.orderinfo.find({
+    $or: [
+        { status: "A" },
+        { price: 250 }
+    ]
+}, { cust_name: 1, _id: 0 })
+

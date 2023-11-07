@@ -1,0 +1,47 @@
+/*Cursors: (Implicit and Explicit Cursor). Write a PL/SQL block of code using parameterized Cursor, that will merge
+the data available in the newly created table N_RollCall with the data available in the table O_RollCall. If the data
+in the first table already exist in the second table then that data should be skipped.*/
+-- Create the N_RollCall table
+CREATE TABLE N_RollCall (
+    roll_id NUMBER PRIMARY KEY,
+    student_name VARCHAR2(50),
+    attendance_date DATE
+);
+
+-- Insert some sample data into N_RollCall
+INSERT INTO N_RollCall (roll_id, student_name, attendance_date) VALUES (1, 'John Doe', TO_DATE('2023-10-24', 'YYYY-MM-DD'));
+INSERT INTO N_RollCall (roll_id, student_name, attendance_date) VALUES (2, 'Jane Smith', TO_DATE('2023-10-24', 'YYYY-MM-DD'));
+INSERT INTO N_RollCall (roll_id, student_name, attendance_date) VALUES (3, 'Bob Johnson', TO_DATE('2023-10-24', 'YYYY-MM-DD'));
+
+-- Create the O_RollCall table
+CREATE TABLE O_RollCall (
+    roll_id NUMBER PRIMARY KEY,
+    student_name VARCHAR2(50),
+    attendance_date DATE
+);
+
+-- Insert some sample data into O_RollCall
+INSERT INTO O_RollCall (roll_id, student_name, attendance_date) VALUES (2, 'Jane Smith', TO_DATE('2023-10-24', 'YYYY-MM-DD'));
+INSERT INTO O_RollCall (roll_id, student_name, attendance_date) VALUES (4, 'Alice Brown', TO_DATE('2023-10-24', 'YYYY-MM-DD'));
+
+DECLARE
+    CURSOR merge_cursor (roll_id NUMBER) IS
+    SELECT * FROM N_RollCall WHERE roll_id = merge_cursor.roll_id;
+    
+    v_roll_id NUMBER;
+BEGIN
+    -- Loop through the records in N_RollCall
+    FOR n_rec IN merge_cursor(roll_id) LOOP
+        -- Check if the record exists in O_RollCall
+        SELECT roll_id INTO v_roll_id FROM O_RollCall WHERE roll_id = n_rec.roll_id;
+        
+        -- If the record doesn't exist in O_RollCall, insert it
+        IF v_roll_id IS NULL THEN
+            INSERT INTO O_RollCall (roll_id, other_columns)
+            VALUES (n_rec.roll_id, n_rec.other_columns);
+        END IF;
+    END LOOP;
+    
+    COMMIT;
+END;
+/

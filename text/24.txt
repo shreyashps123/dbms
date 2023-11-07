@@ -1,0 +1,54 @@
+create table Emp(emp_id int, ename varchar(20), street varchar (20), city varchar (20));
+INSERT INTO Emp (emp_id, ename, street, city) VALUES (101, 'John', 'ABCStreet', 'Pune');
+INSERT INTO Emp (emp_id, ename, street, city) VALUES (102, 'Alice', 'XYZStreet', 'Mumbai');
+INSERT INTO Emp (emp_id, ename, street, city) VALUES (103, 'Bob', ' MainSt', 'Pune');
+INSERT INTO Emp (emp_id, ename, street, city) VALUES (104, 'Carol', ' OakSt', 'Mumbai');
+
+
+select*from Emp;
+
+
+
+create table works (emp_id int, c_id int, ename varchar(20), cname varchar(20), salary int);
+INSERT INTO works (emp_id, c_id, ename, cname, salary) VALUES (101, 1, 'John', 'ABC', 30000);
+INSERT INTO works (emp_id, c_id, ename, cname, salary) VALUES (102, 2, 'Alice', 'Bosch', 45000);
+INSERT INTO works (emp_id, c_id, ename, cname, salary) VALUES (103, 1, 'Bob', 'ABC', 28000);
+INSERT INTO works (emp_id, c_id, ename, cname, salary) VALUES (104, 2, 'Carol', 'Bosch', 55000);
+select*from works;
+
+
+create table Company (c_id int, cname varchar(20), city varchar(20));
+INSERT INTO Company (c_id, cname, city) VALUES (1, 'ABC', 'Mumbai');
+INSERT INTO Company (c_id, cname, city) VALUES (2, 'Bosch', 'Pune');
+select*from Company;
+
+
+create table Manager(mgr_id int, mgrname varchar(20));
+INSERT INTO Manager (mgr_id, mgrname) VALUES (1, 'Mbank');
+INSERT INTO Manager (mgr_id, mgrname) VALUES (2, 'OtherBank');
+select*from Manager;
+
+
+
+
+
+UPDATE Company
+SET city = 'Pune'
+WHERE cname = 'ABC';
+
+
+select*from Company;
+
+
+SELECT e.ename
+FROM Emp e
+JOIN works w ON e.emp_id = w.emp_id
+JOIN Company c ON w.c_id = c.c_id
+WHERE c.cname = 'Bosch' AND c.city = 'Pune';
+
+
+DELETE FROM works
+WHERE c_id = (SELECT c_id FROM Company WHERE cname = 'Bosch')
+AND salary > 50000;
+
+select*from works;

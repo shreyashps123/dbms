@@ -1,0 +1,11 @@
+1.db.Teachers.find({ dno: 2, Salary: { $gte: 10000 } })
+
+2.db.Students.find({ $or: [ { Roll_No: 2 }, { Sname: 'xyz' } ] })
+
+3.db.Students.updateOne({ Roll_No: 5 }, { $set: { Sname: "Emily" } })
+
+
+4.db.Students.deleteMany({ Class: 'FE' })
+
+
+5.db.Students.createIndex({ Roll_No: 1 })

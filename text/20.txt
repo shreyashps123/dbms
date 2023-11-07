@@ -1,0 +1,52 @@
+1.db.students.createIndex({ subject: 1 })
+2.db.students.createIndex({ subject: 1, marks: -1 })
+3.db.students.createIndex({ Rollno: 1 }, { unique: true })
+4.db.students.getIndexes()
+
+
+
+6.db.students.dropIndex("subject_1")
+
+
+
+7.db.students.aggregate([
+    { $group: { _id: "$subject", maxMarks: { $max: "$marks" } } }
+])
+
+
+8.db.students.aggregate([
+    { $group: { _id: "$subject", minMarks: { $min: "$marks" } } }
+])
+
+
+9.db.students.aggregate([
+    { $group: { _id: "$subject", totalMarks: { $sum: "$marks" } } }
+])
+
+
+
+10.db.students.aggregate([
+    { $group: { _id: "$subject", avgMarks: { $avg: "$marks" } } }
+])
+
+
+
+11.db.students.aggregate([
+    { $group: { _id: "$subject", firstRecord: { $first: "$$ROOT" } } }
+])
+
+
+12.db.students.aggregate([
+    { $group: { _id: "$subject", lastRecord: { $last: "$$ROOT" } } }
+])
+
+
+13.db.students.aggregate([
+    { $group: { _id: "$subject", count: { $sum: 1 } } }
+])
+
+
+14.db.students.aggregate([
+    { $group: { _id: "$subject", count: { $count: {} } } }
+])
+

@@ -1,0 +1,56 @@
+create database college;
+
+create table students(S_ID int,name varchar(20),dept_name varchar(20),total_credits int);
+
+insert into students values(1,"aman","comp",10);
+insert into students values(2,"amit","entc",1);
+insert into students values(3,"sachin","civil",30);
+insert into students values(4,"sandip","mech",40);
+select* from students;
+
+
+create table instructor (T_ID int,name varchar(20),dept_name varchar(20),salary int);
+
+insert into instructor values(1,"aman","comp",100000);
+insert into instructor values(2,"amit","entc",1000);
+insert into instructor values(3,"sachin","civil",3000);
+insert into instructor values(4,"sandip","mech",4000000);
+select* from instructor;
+
+
+create table course(course_ID int,title varchar(20),dept_name varchar(20),total_credits int);
+
+insert into course values(1,"dbms","comp",10);
+insert into course values(2,"fm","civil",30);
+insert into course values(3,"cd","mech",40);
+
+select* from course;
+
+
+
+SELECT dept_name, AVG(salary) AS average_salary
+FROM instructor
+GROUP BY dept_name
+HAVING AVG(salary) > 42000;
+
+
+UPDATE instructor
+SET salary = salary * 1.1
+WHERE dept_name = 'Computer';
+select* from instructor;
+
+
+SELECT name
+FROM instructor
+WHERE name NOT IN ('Amol', 'Amit');
+
+
+SELECT name
+FROM students
+WHERE name LIKE '%am%';
+
+
+SELECT s.name
+FROM students s
+JOIN course c ON s.dept_name = c.dept_name
+WHERE s.dept_name = 'comp' AND c.title = 'dbms';

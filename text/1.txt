@@ -1,0 +1,75 @@
+create database bank;
+
+
+create table customer(c_id int,Cname varchar(30),city varchar(20));
+insert into customer(c_id,Cname,city) values(1, 'John', 'Nashik');
+insert into customer(c_id,Cname,city) values(2, 'Amita', 'aurangabad');
+insert into customer(c_id,Cname,city) values(3, 'Seema', 'nagar');
+insert into customer(c_id,Cname,city) values(4, 'Rakesh', 'Pune');
+insert into customer(c_id,Cname,city) values(5, 'Samata', 'Nashik');
+insert into customer(c_id,Cname,city) values(6, 'Anikta', 'Chandwad');
+insert into customer(c_id,Cname,city) values(7, 'Bhavika', 'Pune');
+insert into customer(c_id,Cname,city) values(8, 'Deepa', 'mumbai');
+insert into customer(c_id,Cname,city) values(9, 'Nitin', 'nagpur');
+insert into customer(c_id,Cname,city) values(10, 'Pooja', 'Pune');
+select*from customer;
+
+
+create table Account(c_id integer,Acc_type varchar(20),Amt integer);
+insert into Account(c_id,Acc_type,Amt) values(1,'Current', 5000);
+insert into Account(c_id,Acc_type,Amt) values(2, 'Saving', 20000);
+insert into Account(c_id,Acc_type,Amt) values(3, 'Saving', 70000);
+insert into Account(c_id,Acc_type,Amt) values(4, 'Saving', 50000);
+insert into Account(c_id,Acc_type,Amt) values(6, 'Current', 35000);
+insert into Account(c_id,Acc_type,Amt) values(7, 'Loan', 30000);
+insert into Account(c_id,Acc_type,Amt) values(8, 'Saving', 50000);
+insert into Account(c_id,Acc_type,Amt) values(9, 'Saving', 90000);
+insert into Account(c_id,Acc_type,Amt) values(10, 'Loan', 8000);
+insert into Account(c_id,Acc_type,Amt) values(11, 'Current', 45000);
+ select * from Account;
+ 
+ 
+SELECT c.Cname ,a.Acc_type,a.Amt
+FROM customer c
+JOIN Account a ON a.c_id=c.c_id
+WHERE Acc_type='Saving';
+
+
+SELECT *
+FROM customer
+NATURAL JOIN Account;
+
+
+SELECT *
+FROM customer
+LEFT JOIN Account ON customer.c_id = Account.c_id;
+
+
+SELECT *
+FROM customer
+RIGHT JOIN Account ON customer.c_id = Account.c_id;
+
+SELECT c.*
+FROM customer c
+JOIN customer c2 ON c.city = c2.city
+WHERE c2.Cname = 'Pooja';
+
+
+SELECT *
+FROM Account
+WHERE Amt < (SELECT AVG(Amt) FROM Account);
+
+
+SELECT c_id
+FROM Account
+WHERE Amt = (SELECT MAX(Amt) FROM Account);
+
+
+
+
+
+
+SELECT Amt
+FROM Account
+WHERE Amt > ANY (SELECT Amt FROM Account WHERE Acc_type = 'Saving');
+

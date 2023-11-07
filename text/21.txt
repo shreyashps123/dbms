@@ -1,0 +1,24 @@
+1.db.orderinfo.updateMany({}, { $set: { "Age": 30 } })
+
+
+2.db.orderinfo.createIndex({ status: 1, price: 1 })
+
+
+
+3.db.orderinfo.aggregate([
+    { $group: { _id: { cust_id: "$cust_id", status: "$status" }, count: { $sum: 1 }, ids: { $addToSet: "$_id" } } },
+    { $match: { count: { $gt: 1 } } }
+]).forEach(function(doc) {
+    doc.ids.shift(); // Remove the first item from the array
+    db.orderinfo.remove({ _id: { $in: doc.ids } });
+});
+
+
+
+
+4.db.orderinfo.aggregate([
+    { $group: { _id: "$status", avgPrice: { $avg: "$price" } } }
+])
+
+
+5.db.orderinfo.updateMany({ status: "B" }, { $set: { cust_name: "New Name" } })
